@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voucher</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .voucher-card {
+    background: #fff;
+    border-radius: 16px;
+    max-width: 400px;
+    width: 100%;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    text-align: center;
+  }
+  .voucher-card img { width: 100%; display: block; }
+  .voucher-info { padding: 20px; }
+  .voucher-info h2 { margin: 0 0 8px; color: #1e293b; }
+  .voucher-info p { color: #64748b; margin: 4px 0; font-size: 14px; }
+  .badge {
+    display: inline-block;
+    background: #16a34a;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  .error { color: #dc2626; padding: 40px; font-size: 16px; }
+</style>
+</head>
+<body>
+  <div id="app" class="voucher-card"></div>
+
+  <script>
+    const vouchers = {
+      "1": {
+        title: "Voucher #1",
+        image: "voucher1.png",
+        validTill: "31 Dec 2026",
+        status: "Active"
+      },
+      "2": {
+        title: "Voucher #2",
+        image: "voucher2.png",
+        validTill: "31 Dec 2026",
+        status: "Active"
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const voucher = vouchers[id];
+
+    const app = document.getElementById("app");
+
+    if (voucher) {
+      app.innerHTML = `
+        <img src="${voucher.image}" alt="${voucher.title}">
+        <div class="voucher-info">
+          <h2>🎁 ${voucher.title}</h2>
+          <p>Valid till: ${voucher.validTill}</p>
+          <span class="badge">${voucher.status}</span>
+        </div>
+      `;
+    } else {
+      app.innerHTML = `<div class="error">Invalid or missing voucher ID.</div>`;
+    }
+  </script>
+</body>
+</html>
